@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<filter>
+  <name>Moneyball FM24 Analytics Filter</name>
+  <version>2024.1</version>
+  <description>Comprehensive player analytics filter for Moneyball FM24 analysis. Exports all necessary statistics for advanced player evaluation including xG, passing, defensive actions, and physical metrics.</description>
+  
+  <!-- Player Information Columns -->
+  <columns>
+    <column name="UID" display="true" width="80"/>
+    <column name="Name" display="true" width="150"/>
+    <column name="Age" display="true" width="50"/>
+    <column name="Position" display="true" width="120"/>
+    <column name="EU National" display="true" width="70"/>
+    <column name="Nat" display="true" width="50"/>
+    <column name="Club" display="true" width="150"/>
+    <column name="Division" display="true" width="180"/>
+    <column name="Transfer Value" display="true" width="120"/>
+    <column name="Preferred Foot" display="true" width="100"/>
+    <column name="Personality" display="true" width="120"/>
+    <column name="Rec" display="true" width="50"/>
+    <column name="Inf" display="true" width="50"/>
+    <column name="Expires" display="true" width="80"/>
+    
+    <!-- Playing Time -->
+    <column name="Mins" display="true" width="60"/>
+    
+    <!-- Goalkeeping -->
+    <column name="Sv %" display="true" width="60"/>
+    <column name="Saves/90" display="true" width="70"/>
+    <column name="Cln/90" display="true" width="60"/>
+    <column name="All/90" display="true" width="60"/>
+    <column name="xGP" display="true" width="60"/>
+    <column name="xGP/90" display="true" width="70"/>
+    <column name="Pens Saved Ratio" display="true" width="100"/>
+    <column name="Pen/R" display="true" width="60"/>
+    
+    <!-- Shooting -->
+    <column name="Gls/90" display="true" width="60"/>
+    <column name="Shot/90" display="true" width="70"/>
+    <column name="ShT/90" display="true" width="60"/>
+    <column name="Shot %" display="true" width="70"/>
+    <column name="Conv %" display="true" width="70"/>
+    <column name="xG/90" display="true" width="60"/>
+    <column name="NP-xG/90" display="true" width="80"/>
+    <column name="xG/shot" display="true" width="70"/>
+    <column name="xG-OP" display="true" width="60"/>
+    <column name="Goals Outside Box" display="true" width="120"/>
+    <column name="Goals Outside Box/90" display="true" width="130"/>
+    <column name="Shots Outside Box/90" display="true" width="130"/>
+    <column name="FK Shots" display="true" width="80"/>
+    <column name="FKShots/90" display="true" width="90"/>
+    
+    <!-- Passing -->
+    <column name="Ps C/90" display="true" width="70"/>
+    <column name="Ps A/90" display="true" width="70"/>
+    <column name="Pas %" display="true" width="60"/>
+    <column name="Pas A" display="true" width="60"/>
+    <column name="Pr passes/90" display="true" width="100"/>
+    <column name="K Ps/90" display="true" width="70"/>
+    <column name="OP-KP/90" display="true" width="80"/>
+    
+    <!-- Assists and Creativity -->
+    <column name="Asts/90" display="true" width="70"/>
+    <column name="xA/90" display="true" width="60"/>
+    <column name="Ch C/90" display="true" width="70"/>
+    
+    <!-- Crossing -->
+    <column name="Cr C/90" display="true" width="70"/>
+    <column name="Crs A/90" display="true" width="80"/>
+    <column name="OP-Crs C/90" display="true" width="90"/>
+    <column name="OP-Crs A/90" display="true" width="90"/>
+    <column name="OP-Cr %" display="true" width="80"/>
+    <column name="Cr C/A" display="true" width="70"/>
+    
+    <!-- Defending -->
+    <column name="Tck/90" display="true" width="70"/>
+    <column name="Tck R" display="true" width="60"/>
+    <column name="K Tck/90" display="true" width="80"/>
+    <column name="Int/90" display="true" width="60"/>
+    <column name="Clr/90" display="true" width="60"/>
+    <column name="Blk/90" display="true" width="60"/>
+    <column name="Shts Blckd/90" display="true" width="100"/>
+    
+    <!-- Aerial -->
+    <column name="Hdrs W/90" display="true" width="80"/>
+    <column name="Hdrs L/90" display="true" width="80"/>
+    <column name="Aer A/90" display="true" width="80"/>
+    <column name="Hdr %" display="true" width="60"/>
+    <column name="K Hdrs/90" display="true" width="90"/>
+    
+    <!-- Possession -->
+    <column name="Poss Won/90" display="true" width="90"/>
+    <column name="Poss Lost/90" display="true" width="100"/>
+    <column name="Drb/90" display="true" width="60"/>
+    
+    <!-- Pressing -->
+    <column name="Pres C/90" display="true" width="80"/>
+    <column name="Pres A/90" display="true" width="80"/>
+    
+    <!-- Physical -->
+    <column name="Dist/90" display="true" width="70"/>
+    <column name="Sprints/90" display="true" width="80"/>
+    
+    <!-- Discipline -->
+    <column name="Yel" display="true" width="50"/>
+    <column name="Red" display="true" width="50"/>
+    <column name="Yellow/90" display="true" width="80"/>
+    <column name="Red/90" display="true" width="70"/>
+    <column name="Fls" display="true" width="50"/>
+    <column name="FA" display="true" width="50"/>
+    <column name="FoulsMade/90" display="true" width="100"/>
+    <column name="FoulsAgainst/90" display="true" width="120"/>
+    <column name="Off" display="true" width="50"/>
+    <column name="Offsides/90" display="true" width="90"/>
+    
+    <!-- Miscellaneous -->
+    <column name="Gl Mst" display="true" width="70"/>
+    <column name="Gl Mst/90" display="true" width="80"/>
+  </columns>
+  
+  <!-- Filter Criteria -->
+  <criteria>
+    <!-- Minimum playing time: 900 minutes (10 full matches) -->
+    <condition field="Mins" operator="greater_than_or_equal" value="900"/>
+    
+    <!-- Age range: 16-39 (covers all playable ages) -->
+    <condition field="Age" operator="greater_than_or_equal" value="16"/>
+    <condition field="Age" operator="less_than_or_equal" value="39"/>
+    
+    <!-- Include all positions -->
+    <condition field="Position" operator="not_empty"/>
+    
+    <!-- Transfer status will be set manually for each export:
+         - Available for Transfer (for signed players export)
+         - Available on Loan (for loans export)  
+         - No restriction (for universal export)
+    -->
+  </criteria>
+  
+  <!-- Sorting -->
+  <sort field="Division" direction="ascending"/>
+  <sort field="Club" direction="ascending"/>
+  <sort field="Name" direction="ascending"/>
+  
+  <!-- Notes for users -->
+  <notes>
+    This filter is designed for the Moneyball: FM web application.
+    
+    IMPORTANT USAGE INSTRUCTIONS:
+    1. Load this filter in FM24 Player Search
+    2. Create THREE separate exports by modifying the Transfer Status:
+       
+       Export 1 - Signed Players:
+       - Set Transfer Status to "Available for Transfer"
+       - Export as HTML: "signed_players.html"
+       
+       Export 2 - Loan Players:
+       - Set Transfer Status to "Available on Loan"  
+       - Export as HTML: "loans_players.html"
+       
+       Export 3 - Universal Players:
+       - Remove all Transfer Status restrictions
+       - Export as HTML: "universal_players.html"
+    
+    3. Upload all three HTML files to the Moneyball: FM web application
+    
+    The filter includes all statistics needed for advanced player analysis:
+    - Expected Goals (xG) and Expected Assists (xA)
+    - Defensive actions and efficiency metrics
+    - Passing accuracy and progression
+    - Physical performance indicators
+    - League-specific performance data
+    
+    For best results:
+    - Include all active leagues in your database
+    - Ensure players have sufficient playing time (900+ minutes)
+    - Export data from the current season for accuracy
+  </notes>
+</filter>
