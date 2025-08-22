@@ -1,0 +1,139 @@
+[build]
+  # Build command
+  command = "npm run build"
+  
+  # Directory to publish (contains the built app)
+  publish = "build"
+  
+  # Node.js version
+  environment = { NODE_VERSION = "18" }
+
+[build.environment]
+  # Environment variables for build
+  GENERATE_SOURCEMAP = "false"
+  CI = "false"
+
+# Redirect rules for SPA (Single Page Application)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Security headers
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    
+    # Content Security Policy
+    Content-Security-Policy = """
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      font-src 'self' https://fonts.gstatic.com;
+      img-src 'self' data: https:;
+      connect-src 'self' https://cdn.jsdelivr.net;
+      worker-src 'self' blob:;
+      child-src 'self' blob:;
+    """
+
+# Cache headers for static assets
+[[headers]]
+  for = "/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache headers for fonts
+[[headers]]
+  for = "*.woff2"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Special headers for Python files (served as text)
+[[headers]]
+  for = "*.py"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+    Cache-Control = "public, max-age=3600"
+
+# Special headers for FMF files
+[[headers]]
+  for = "*.fmf"
+  [headers.values]
+    Content-Type = "application/xml"
+    Content-Disposition = "attachment; filename=fm24-moneyball-filter.fmf"
+
+# Enable gzip compression
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Enable compression
+    X-Compression = "gzip"
+
+# Branch-specific deploy settings
+[context.production]
+  # Production environment variables
+  environment = { NODE_ENV = "production" }
+
+[context.deploy-preview]
+  # Deploy preview environment
+  environment = { NODE_ENV = "production" }
+
+[context.branch-deploy]
+  # Branch deploy environment
+  environment = { NODE_ENV = "development" }
+
+# Form handling (if needed for feedback)
+[forms]
+  # Basic form spam protection
+  settings = { spam_protection = true }
+
+# Plugin configuration
+[[plugins]]
+  # Netlify Lighthouse plugin for performance monitoring
+  package = "@netlify/plugin-lighthouse"
+  
+  [plugins.inputs.settings]
+    output_path = "reports/lighthouse.html"
+    
+  [plugins.inputs.thresholds]
+    performance = 0.8
+    accessibility = 0.9
+    best-practices = 0.8
+    seo = 0.8
+
+# Error pages
+[[redirects]]
+  from = "/404"
+  to = "/404.html"
+  status = 404
+
+# Analytics and monitoring
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+  canonical_urls = true
